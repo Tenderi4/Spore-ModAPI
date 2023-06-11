@@ -30,6 +30,9 @@
 #include <Spore\UserInterface.h>
 #include <Spore\IO.h>
 #include <Spore\Terrain.h>
+#include <Spore\Cell.h>
+
+#include <Spore\Pollinator\AchievementsManager.h>
 
 #include <Spore\Editors\Editor.h>
 #include <Spore\Editors\EditorRequest.h>
@@ -38,6 +41,8 @@
 #include <Spore\App\IClassManager.h>
 #include <Spore\App\FileDrop.h>
 #include <Spore\App\cLocaleManager.h>
+#include <Spore\App\cSporeApp.h>
+#include <Spore\App\cArithmeticaResource.h>
 
 #include <Spore\Audio\AudioSystem.h>
 

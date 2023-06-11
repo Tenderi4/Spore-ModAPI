@@ -10,6 +10,7 @@
 #include <Spore\Graphics\IRenderer.h>
 #include <Spore\Graphics\ITextureManager.h>
 #include <Spore\Graphics\IShadowWorld.h>
+#include <Spore\Graphics\cFrustumCull.h>
 #include <Spore\Graphics\cModelWorld.h>
 #include <Spore\Graphics\RenderUtils.h>
 #include <Spore\Graphics\IRenderTargetManager.h>
@@ -172,7 +173,9 @@ namespace Graphics
 		DefineAddress(sTransform, SelectAddress(0x016FF8DC, 0x16F85AC));
 		DefineAddress(sTransposedTransform, SelectAddress(0x1700024, 0x16F8CF4));
 		DefineAddress(sPresentParams, SelectAddress(0x16FFECC, 0x16F8B9C));
+		DefineAddress(sRasterDelta, SelectAddress(0x16FFE30, 0x16F8B00));
 		DefineAddress(SetTexture, SelectAddress(0x11F39D0, 0x11F12A0));
+		DefineAddress(SetShaderData, SelectAddress(0x7786E0, 0x777B50));
 	}
 
 	namespace Addresses(ShaderBuilder) 
@@ -230,6 +233,14 @@ namespace Graphics
 	{
 		DefineAddress(FinishBackgroundLoad, SelectAddress(0x7523E0, 0x7515D0));
 		DefineAddress(UpdateWithLODMeshes, SelectAddress(0x74B7C0, 0x74A990));
+	}
+
+	namespace Addresses(cFrustumCull)
+	{
+		DefineAddress(OffsetPlanes, SelectAddress(0x6FFFE0, 0x6FFB10));
+		DefineAddress(FrustumTestSphere, SelectAddress(0x700130, 0x6FFC60));
+		DefineAddress(FrustumTestAABB, SelectAddress(0x700680, 0x07001B0));
+		DefineAddress(UpdateFromProjectionMatrix, SelectAddress(0x700360, 0x6FFE90));
 	}
 }
 

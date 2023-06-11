@@ -117,17 +117,17 @@ namespace UTFWin
 				/* 10h */	float mouseY;
 				/// A combination of values from the MouseStateFlags enum.
 				/* 14h */	int mouseState;
-				/// Which mouse button was pressed/released.
+				/// Which mouse button was pressed/released. Not always available??
 				/* 18h */	MouseButton mouseButton;
 
 				inline bool IsLeftButton() const {
-					return mouseButton == MouseButton::kMouseButtonLeft;
+					return (mouseState & MouseStateFlags::kMouseLeftButtonDown) != 0;
 				}
 				inline bool IsMiddleButton() const {
-					return mouseButton == MouseButton::kMouseButtonWheel;
+					return (mouseState & MouseStateFlags::kMouseMiddleButtonDown) != 0;
 				}
 				inline bool IsRightButton() const {
-					return mouseButton == MouseButton::kMouseButtonRight;
+					return (mouseState & MouseStateFlags::kMouseRightButtonDown) != 0;
 				}
 				inline Math::Point GetPosition() const {
 					return { mouseX, mouseY };
@@ -275,6 +275,15 @@ namespace UTFWin
 				/// The change of the text.
 				/* 18h */	TextChange* change;
 			} TextChanged;
+
+			///
+			/// The event arguments for the message type: UTFWin::kMsgComponentActivated
+			///
+			struct
+			{
+				/// The control ID of the activated button.
+				/* 0Ch */	uint32_t controlID;
+			} ComponentActivated;
 		};
 	};
 	ASSERT_SIZE(Message, 0x1C);  // 7 32bit ints

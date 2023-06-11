@@ -16,7 +16,13 @@
 #include <Spore\Simulator\cDefaultProjectileWeapon.h>
 #include <Spore\Simulator\cDragInputProjectileToolStrategy.h>
 #include <Spore\Simulator\cDropCargoToolStrategy.h>
-#include <Spore\Simulator\Cell\GameModeCell.h>
+#include <Spore\Simulator\Cell\cCellGame.h>
+#include <Spore\Simulator\Cell\cCellGFX.h>
+#include <Spore\Simulator\Cell\cCellObjectData.h>
+#include <Spore\Simulator\Cell\cCelLResource.h>
+#include <Spore\Simulator\Cell\cCellUI.h>
+#include <Spore\Simulator\Cell\CellFunctions.h>
+#include <Spore\Simulator\cCreatureGameData.h>
 #include <Spore\Simulator\cEmpire.h>
 #include <Spore\Simulator\cEnergyRepairToolStrategy.h>
 #include <Spore\Simulator\cGameDataUFO.h>
@@ -26,6 +32,7 @@
 #include <Spore\Simulator\cGlobalMindEraseToolStrategy.h>
 #include <Spore\Simulator\cGonzagoTimer.h>
 #include <Spore\Simulator\cMindEraseToolStrategy.h>
+#include <Spore\Simulator\cObjectPool.h>
 #include <Spore\Simulator\cPlaceColonyToolStrategy.h>
 #include <Spore\Simulator\cPlaceObjectToolStrategy.h>
 #include <Spore\Simulator\cPlanet.h>
@@ -40,6 +47,7 @@
 #include <Spore\Simulator\cSimulatorSpaceGame.h>
 #include <Spore\Simulator\cSpaceToolData.h>
 #include <Spore\Simulator\cSpaceInventoryItem.h>
+#include <Spore\Simulator\cSpaceNames.h>
 #include <Spore\Simulator\cStarRecord.h>
 #include <Spore\Simulator\cScenarioData.h>
 #include <Spore\Simulator\cScenarioPlayMode.h>
@@ -59,6 +67,7 @@
 #include <Spore\Simulator\cSolarSystem.h>
 #include <Spore\Simulator\cStar.h>
 #include <Spore\Simulator\cMissionManager.h>
+#include <Spore\Simulator\cSimulatorUniverse.h>
 #include <Spore\Simulator\Serialization.h>
 #include <Spore\Simulator\SpaceConstants.h>
 #include <Spore\Simulator\SubSystem\cRelationshipManager.h>
@@ -115,6 +124,7 @@ namespace Addresses(Simulator)
 #else
 	DefineAddress(sLightingWorld, SelectAddress(0x1682CD4, 0x167EA54));
 	DefineAddress(sPrecalculatedSolarStarRadius, SelectAddress(0x157DCF0, 0x1579D10));
+	DefineAddress(sSimulatorUniverse, SelectAddress(0x16E0A18, 0x16DC798));
 #endif
 }
 
@@ -233,6 +243,7 @@ namespace Simulator
 #endif
 	}
 
+#ifndef SDK_TO_GHIDRA
 	namespace Cell
 	{
 		namespace Addresses(GameModeCell)
@@ -256,6 +267,7 @@ namespace Simulator
 			DefineAddress(HandleMessage, SelectAddress(0xE5CB90, 0xE62700));
 		}
 	}
+#endif
 
 	namespace Addresses(cEmpire)
 	{
@@ -771,6 +783,153 @@ namespace Simulator
 		DefineAddress(WriteToXML, SelectAddress(0xBD5960, 0xBD6630));
 		DefineAddress(RemoveOwner, SelectAddress(0xBD5640, 0xBD6310));
 	}
+
+	namespace Addresses(cCreatureGameData)
+	{
+		DefineAddress(Get, SelectAddress(0xD2D640, 0xD2E340));
+		DefineAddress(GetEvoPointsToNextBrainLevel, SelectAddress(0xD2D680, 0xD2E380));
+		DefineAddress(GetAbilityMode, SelectAddress(0xD2D790, 0xD2E490));
+		DefineAddress(SetAbilityMode, SelectAddress(0xD2D7A0, 0xD2E4A0));
+		DefineAddress(AfterGlideFinish, SelectAddress(0xD2D880, 0xD2E580));
+		DefineAddress(CalculateAvatarNormalizingScale, SelectAddress(0xD2DA20, 0xD2E720));
+		DefineAddress(GetAvatarNormalizingScale, SelectAddress(0xD2DB00, 0xD2E800));
+		DefineAddress(GetEvolutionPoints, SelectAddress(0xD2D650, 0xD2E350));
+		DefineAddress(SetEvolutionPoints, SelectAddress(0xD2D780, 0xD2E480));
+		DefineAddress(AddEvolutionPoints, SelectAddress(0xD2DBA0, 0xD2E8A0));
+	}
+
+	namespace Addresses(cSpaceNames)
+	{
+		DefineAddress(Get, SelectAddress(0x4010A0, 0x4010A0));
+		DefineAddress(GenerateRandomName, SelectAddress(0x5ECD40, 0x5ED000));
+	}
+
+#ifndef SDK_TO_GHIDRA
+	namespace Addresses(cObjectPool)
+	{
+		DefineAddress(Initialize, SelectAddress(0xB71A10, 0xB72190));
+		DefineAddress(_dtor, SelectAddress(0xB71A70, 0xB721F0));
+		DefineAddress(Get, SelectAddress(0x0B71BA0, 0xB72320));
+		DefineAddress(Clear, SelectAddress(0xB71AA0, 0xB72220));
+		DefineAddress(CreateObject, SelectAddress(0xB71AF0, 0xB72270));
+		DefineAddress(GetIfNotDeleted, SelectAddress(0xB71B60, 0xB722E0));
+		DefineAddress(DeleteObject, SelectAddress(0xB71BF0, 0xB72370));
+		DefineAddress(Iterate, SelectAddress(0xB71BC0, 0xB72340));
+	}
+#endif
+	namespace Addresses(cObjectPool_)
+	{
+		DefineAddress(Initialize, SelectAddress(0xB71A10, 0xB72190));
+		DefineAddress(_dtor, SelectAddress(0xB71A70, 0xB721F0));
+		DefineAddress(Get, SelectAddress(0x0B71BA0, 0xB72320));
+		DefineAddress(Clear, SelectAddress(0xB71AA0, 0xB72220));
+		DefineAddress(CreateObject, SelectAddress(0xB71AF0, 0xB72270));
+		DefineAddress(GetIfNotDeleted, SelectAddress(0xB71B60, 0xB722E0));
+		DefineAddress(DeleteObject, SelectAddress(0xB71BF0, 0xB72370));
+		DefineAddress(Iterate, SelectAddress(0xB71BC0, 0xB72340));
+	}
+
+	namespace Addresses(cSimulatorUniverse)
+	{
+#ifndef SDK_TO_GHIDRA
+		DefineAddress(_ptr, SelectAddress(0x16E0A18, 0x16DC798));
+#endif
+	}
+
+	namespace Cell
+	{
+		namespace Addresses(cCellGame)
+		{
+			DefineAddress(_ptr, SelectAddress(0x16B7E84, 0x16B3C04));
+			DefineAddress(Initialize, SelectAddress(0xE81130, 0xE80BA0));
+			DefineAddress(CreateCellObject, SelectAddress(0xE74F60, 0xE74A20));
+			DefineAddress(MovePlayerToMousePosition, SelectAddress(0xE5BD90, 0xE5B790));
+			DefineAddress(GetScaleDifferenceWithPlayer, SelectAddress(0xE57940, 0xE57340));
+			DefineAddress(ShouldNotAttack, SelectAddress(0xE57A60, 0xE57460));
+		}
+
+		namespace Addresses(cCellGFX)
+		{
+			DefineAddress(_ptr, SelectAddress(0x16B7E88, 0x16B3C08));
+			DefineAddress(PreloadResources, SelectAddress(0xE66C90, 0xE666F0));
+			DefineAddress(PreloadCellResource, SelectAddress(0xE66950, 0xE663B0));
+			DefineAddress(PreloadPopulateResource, SelectAddress(0xE66B60, 0xE665C0));
+			DefineAddress(PreloadLootTableResource, SelectAddress(0xE50290, 0xE4FC00));
+			DefineAddress(PreloadCreature, SelectAddress(0xE64F10, 0xE64980));
+			DefineAddress(AddPreloadedEffect, SelectAddress(0xE66820, 0xE66280));
+			DefineAddress(AddPreloadedTexture, SelectAddress(0xE65F10, 0xE65970));
+			DefineAddress(AddPreloadedModel, SelectAddress(0xE659B0, 0xE65410));
+			DefineAddress(AddPreloadedModel2, SelectAddress(0xE65940, 0xE653A0));
+			DefineAddress(Initialize, SelectAddress(0xE5E130, 0xE5DBA0));
+			DefineAddress(StartDisplay, SelectAddress(0xE55780, 0xE55120));
+			DefineAddress(CreateEffect, SelectAddress(0x628470, 0x628480));
+			DefineAddress(LoadEffectMap, SelectAddress(0xE63AF0, 0xE63560));
+			DefineAddress(InstanceEffectOnCell, SelectAddress(0xE66DE0, 0xE66840));
+#ifndef SDK_TO_GHIDRA
+			DefineAddress(sVisibleBackgroundBBox_ptr, SelectAddress(0x16B7F08, 0x16B3C88));
+			DefineAddress(sFrustumCull_ptr, SelectAddress(0x16B7F38, 0x16B3CB8));
+#else
+			DefineAddress(sVisibleBackgroundBBox, SelectAddress(0x16B7F08, 0x16B3C88));
+			DefineAddress(sFrustumCull, SelectAddress(0x16B7F38, 0x16B3CB8));
+#endif
+		}
+
+		namespace Addresses(cCellUI)
+		{
+			DefineAddress(_ptr, SelectAddress(0x16B7E8C, 0x16B3C0C));
+			DefineAddress(Load, SelectAddress(0xE548B0, 0xE54270));
+			DefineAddress(ShowHealthRollover, SelectAddress(0xE628D0, 0xE62340));
+		}
+
+		namespace Addresses(cCellSerializableData)
+		{
+			DefineAddress(_ptr, SelectAddress(0x16B8060, 0x16B3DE0));
+		}
+
+		namespace Addresses(cCellDataReference_)
+		{
+			DefineAddress(Create, SelectAddress(0xE829B0, 0xE82420));
+		}
+	}
+
+	namespace Addresses(Cell)
+	{
+		DefineAddress(GetData, SelectAddress(0xE4D2A0, 0xE4CBF0));
+		DefineAddress(GetGlobalsData, SelectAddress(0xE4D4A0, 0xE4CE20));
+		DefineAddress(sSerializer__lootTable, SelectAddress(0x16B52A0, 0x16B1020));
+		DefineAddress(sSerializer__cell, SelectAddress(0x16B1730, 0x16AD4B0));
+		DefineAddress(sSerializer__populate, SelectAddress(0x16B4D00, 0x16B0A80));
+		DefineAddress(sSerializer__world, SelectAddress(0x16B1650, 0x16AD3D0));
+		DefineAddress(sSerializer__look_table, SelectAddress(0x16B1624, 0x16AD3A4));
+		DefineAddress(sSerializer__random_creature, SelectAddress(0x16B16A8, 0x16AD428));
+		DefineAddress(sSerializer__look_algorithm, SelectAddress(0x16B52F8, 0x16B1078));
+		DefineAddress(sSerializer__backgroundMap, SelectAddress(0x16B52CC, 0x16B104C));
+		DefineAddress(sSerializer__effectMap, SelectAddress(0x16B5000, 0x16B0D80));
+		DefineAddress(sSerializer__powers, SelectAddress(0x16B4E64, 0x16B0BE4));
+		DefineAddress(sSerializer__globals, SelectAddress(0x16B4DDC, 0x16B0B5C));
+		DefineAddress(sSerializer__structure, SelectAddress(0x16B16D4, 0x16AD454));
+
+		DefineAddress(GetCurrentAdvectInfo, SelectAddress(0xE594F0, 0xE58EF0));
+		DefineAddress(GetNextAdvectID, SelectAddress(0xE59430, 0xE58E30));
+		DefineAddress(CreateCellObject, SelectAddress(0xE74F60, 0xE74A20));
+		DefineAddress(MovePlayerToMousePosition, SelectAddress(0xE5BD90, 0xE5B790));
+		DefineAddress(GetScaleDifferenceWithPlayer, SelectAddress(0xE57940, 0xE57340));
+		DefineAddress(ShouldNotAttack, SelectAddress(0xE57A60, 0xE57460));
+		DefineAddress(GetDamageAmount, SelectAddress(0xE58F80, 0xE58980));
+		DefineAddress(FindCellsInRadius, SelectAddress(0xE876D0, 0xE87210));
+		DefineAddress(PlayAnimation, SelectAddress(0xE6D780, 0xE6D200));
+		DefineAddress(GetModelKeyForCellResource, SelectAddress(0xE65BE0, 0xE65640));
+	}
+
+#ifdef SDK_TO_GHIDRA
+	namespace Addresses(Cell)
+	{
+		DefineAddress(sCellGame, SelectAddress(0x16B7E84, 0x16B3C04));
+		DefineAddress(sCellGFX, SelectAddress(0x16B7E88, 0x16B3C08));
+		DefineAddress(sCellUI, SelectAddress(0x16B7E8C, 0x16B3C0C));
+		DefineAddress(sCellSerializableData, SelectAddress(0x16B8060, 0x16B3DE0));
+	}
+#endif
 }
 
 #ifdef SDK_TO_GHIDRA
@@ -779,6 +938,7 @@ namespace Addresses(Simulator)
 	DefineAddress(sSpacePlayerData, SelectAddress(0x16E1D0C, 0x16DDA8C));
 	DefineAddress(sScenarioEditHistory, SelectAddress(0x160A850, 0x16065D8));
 	DefineAddress(TimeAtStartOfFrame, SelectAddress(0xB63580, 0xB63980));
+	DefineAddress(cCreatureGameData, SelectAddress(0x16A25F0, 0x169E370));
 }
 #endif
 

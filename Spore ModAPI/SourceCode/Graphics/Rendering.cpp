@@ -24,9 +24,20 @@
 #include <Spore\Graphics\RenderUtils.h>
 #include <Spore\Graphics\GlobalState.h>
 #include <Spore\Graphics\ActiveState.h>
+#include <Spore\Graphics\cFrustumCull.h>
 
 namespace Graphics
 {
+	auto_METHOD_VOID(cFrustumCull, OffsetPlanes, Args(float a), Args(a));
+
+	auto_METHOD(cFrustumCull, int, FrustumTestAABB,
+		Args(const Math::Vector3& lower, const Math::Vector3& upper, int flags), Args(lower, upper, flags));
+
+	auto_METHOD(cFrustumCull, int, FrustumTestSphere,
+		Args(const Math::Vector3& center, float radius), Args(center, radius));
+
+	auto_METHOD_VOID(cFrustumCull, UpdateFromProjectionMatrix, Args(const Math::Matrix4& a), Args(a));
+
 
 	auto_STATIC_METHOD_(IRenderer, IRenderer*, Get);
 
@@ -99,11 +110,6 @@ namespace Graphics
 		}
 	}
 
-
-
-	auto_STATIC_METHOD_VOID(RenderUtils, SetShaderData,
-		Args(short index, void* value, bool overrideIfEqual), Args(index, value, overrideIfEqual));
-
 	auto_STATIC_METHOD(RenderUtils, int, GetShaderDataSize, Args(short index), Args(index));
 
 	auto_STATIC_METHOD(RenderUtils, void, RegisterShaderData,
@@ -152,8 +158,18 @@ namespace Graphics
 	{
 		auto_STATIC_METHOD_VOID(ActiveState, SetTexture, Args(int slotIndex, RenderWare::Raster* raster), Args(slotIndex, raster));
 
+		auto_STATIC_METHOD_VOID(ActiveState, SetShaderData, Args(short index, void* value, bool overrideIfEqual), Args(index, value, overrideIfEqual));
+
 		void** GetShaderData() {
 			return (void**)(GetAddress(ActiveState, sShaderData));
+		}
+
+		int GetRasterDelta() {
+			return *(int*)(GetAddress(ActiveState, sRasterDelta));
+		}
+
+		void SetRasterDelta(int delta) {
+			*(int*)(GetAddress(ActiveState, sRasterDelta)) = delta;
 		}
 
 		MaterialShader* GetMaterialShader() {

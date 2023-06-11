@@ -981,10 +981,7 @@
     <ClInclude Include="Spore\Editors\BakeManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Spore\Simulator\Cell\CellUI.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Spore\Simulator\Cell\GameModeCell.h">
+    <ClInclude Include="Spore\Simulator\Cell\cCellUI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Spore\Input.h">
@@ -993,7 +990,7 @@
     <ClInclude Include="Spore\Swarm\Constants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Spore\Simulator\Cell\CellGFX.h">
+    <ClInclude Include="Spore\Simulator\Cell\cCellGFX.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Spore\Simulator\GoalCard.h">
@@ -2022,6 +2019,96 @@
     <ClInclude Include="Spore\Skinner\cSkinPainterJobAmbientOcclusion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Spore\Simulator\cCreatureGameData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spore\App\cCreatureModeStrategy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spore\Simulator\cBaseDisplayStrategy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spore\Simulator\cCreatureDisplayStrategy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spore\Simulator\cAbilityUIMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spore\Simulator\AI\cBehaviorTreeData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spore\Simulator\Cell\cCellResource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spore\App\cArithmeticaResource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spore\Simulator\Cell\cCellSerialiazibleData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spore\Simulator\Cell\cCellGame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spore\App\cCellModeStrategy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spore\Simulator\cObjectPool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spore\Simulator\Cell\cCellObjectData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spore\Cell.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spore\Simulator\Cell\cCellScaleInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spore\Editors\PlayModeUI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spore\Editors\IPlayModeModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spore\App\cMouseCamera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spore\UI\cUINewProgressBar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spore\Simulator\Cell\CellFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spore\Simulator\Cell\cCellQueryLinkedPool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spore\Simulator\Cell\CellAnimations.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spore\App\cAppSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spore\App\CommandLine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spore\App\cSporeApp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spore\App\Canvas.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spore\Simulator\cSimulatorUniverse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spore\Pollinator\AchievementsManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spore\Pollinator\cSPAchievementSerializer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spore\App\ConfigManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\Allocator.cpp">
@@ -2178,9 +2265,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SourceCode\Editors\BakeManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceCode\Simulator\CellGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SourceCode\Editors\Colorpickers.cpp">
@@ -2499,6 +2583,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SourceCode\Skinner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Simulator\CreatureGame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Simulator\SimulatorCell.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

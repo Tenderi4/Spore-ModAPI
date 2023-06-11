@@ -38,6 +38,7 @@ namespace App
 		: public ICheatManager
 		, public IVirtual
 	{
+	public:
 		cCheatManager();
 		virtual ~cCheatManager() {};
 
@@ -70,6 +71,7 @@ namespace App
 
 		/* 08h */	int mnRefCount;
 		/* 0Ch */	CheatMap_t mCheats;
+		/// Calling these cheats disable achievements, by posting a ICheatsManager::kMsgCheatInvoked message.
 		/* 28h */	eastl::set<eastl::string> mNotifyCheats;
 		/* 44h */	ArgScript::FormatParser* mpArgScript;
 		/* 48h */	eastl::set<ObjectPtr> field_48;  // UIs?

@@ -509,6 +509,14 @@ namespace Resource
 		Args(SaveAreaID areaID, Resource::Database* pDatabase, void* arg), 
 		Args(areaID, pDatabase, arg));
 
+	auto_STATIC_METHOD(Paths, int, CreateTempFile,
+		Args(char16_t* a1, char16_t* a2, char16_t* a3, char16_t* a4),
+		Args(a1, a2, a3, a4));
+
+	auto_STATIC_METHOD(Paths, bool, CreateSaveAreaDirectoryDatabase,
+		Args(PathID basePath, const char16_t* folderName, DatabaseDirectoryFilesPtr& dst, SaveAreaID saveArea),
+		Args(basePath, folderName, dst, saveArea));
+
 	const char16_t* Paths::GetDataDir() {
 		return GetDirFromID(PathID::Data);
 	}
@@ -518,6 +526,10 @@ namespace Resource
 	const char16_t* Paths::GetDebugDir() {
 		return GetDirFromID(PathID::Debug);
 	}
+
+	auto_STATIC_METHOD(Resource, bool, SaveNamedResource,
+		Args(ResourceObject* resource, const char16_t* fileName, Database* database),
+		Args(resource, fileName, database));
 
 	//////////////////////
 

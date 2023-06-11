@@ -2,6 +2,8 @@
 
 #include <Spore\Internal.h>
 #include <Spore\Resource\Database.h>
+#include <Spore\Resource\DatabaseDirectoryFiles.h>
+#include <Spore\Resource\ResourceObject.h>
 #include <EASTL\string.h>
 
 namespace Resource
@@ -35,6 +37,7 @@ namespace Resource
 		Plants = 0x90368EA0,
 		Adventures = 0x86CA01C9,
 		CityMusic = 0x500EFC6,
+		/// Pollination.package
 		Cache = 0x11AC19C,
 		Server = 0x11AC19D,
 		Planets = 0x31389B5,
@@ -50,6 +53,14 @@ namespace Resource
 
 		void RegisterDirectory(PathID dirID, const char16_t* path);
 
+		/// Creates an empty temporary file.
+		/// @param[out] dstPath Buffer where the destination path will be written.
+		/// @param folderPath [Optional] Directory where the file is created, by default it uses the system temporary folder.
+		/// @param filePrefix [Optional] Prefix for the name of the file, "temp" by default.
+		/// @param fileExtension [Optional] Extension of the file, ".tmp" by default.
+		/// @returns The length of the path that has been written to the `dstPath` buffer.
+		int CreateTempFile(char16_t* dstPath, char16_t* folderPath = nullptr, char16_t* filePrefix = nullptr, char16_t* fileExtension = nullptr);
+
 		const char16_t* GetDataDir();
 		const char16_t* GetAppDir();
 		const char16_t* GetDebugDir();
@@ -62,7 +73,20 @@ namespace Resource
 		/// @returns
 		Database* GetSaveArea(SaveAreaID areaID);
 
-		void RegisterSaveArea(SaveAreaID areaID, Resource::Database* pDatabase, void* = nullptr);
+		/// Registers a database to be used to save specific types of data, such as saved games, creations, etc.
+		/// @param areaID
+		/// @param pDatabase
+		/// @param unk
+		void RegisterSaveArea(SaveAreaID areaID, Resource::Database* pDatabase, void* unk = nullptr);
+
+		/// Creates a DatabaseDirectoryFiles database for use as a save area.
+		/// The database path will be the one obtained through `basePath` plus `folderName`.
+		/// @param basePath
+		/// @param folderName
+		/// @param[out] dst
+		/// @param saveArea
+		/// @returns True if the operation succeeded
+		bool CreateSaveAreaDirectoryDatabase(PathID basePath, const char16_t* folderName, DatabaseDirectoryFilesPtr& dst, SaveAreaID saveArea);
 	}
 
 	namespace Addresses(Paths)
@@ -72,5 +96,14 @@ namespace Resource
 		DeclareAddress(RegisterDirectory);  // 0x688DF0 0x688BA0
 		DeclareAddress(GetSaveArea);
 		DeclareAddress(RegisterSaveArea);
+		DeclareAddress(CreateTempFile);  // 0x932AC0 0x932550
+		DeclareAddress(CreateSaveAreaDirectoryDatabase);  // 0x6B2950 0x6B25B0
 	}
+
+	bool SaveNamedResource(ResourceObject* resource, const char16_t* fileName, Database* database);
+}
+
+namespace Addresses(Resource)
+{
+	DeclareAddress(SaveNamedResource);  // 0x6B4340 0x6B3FA0
 }
