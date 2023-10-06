@@ -52,5 +52,3 @@
 
 #include <Spore\Skinner\cPaintSystem.h>
 #include <Spore\Skinner\cSkinPainter.h>
-
-using namespace eastl;
