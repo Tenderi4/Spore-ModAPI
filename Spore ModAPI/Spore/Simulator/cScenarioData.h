@@ -93,9 +93,9 @@ namespace Simulator
 		/* 34h */	int field_34;
 		/* 38h */	TexturePtr mThumbnail;
 		/* 3Ch */	TexturePtr mLargeThumbnail;
-		/* 40h */	int field_40;
-		/* 44h */	int field_44;
-		/* 48h */	int field_48;
+		/* 40h */	TexturePtr mSecondThumbnail;
+		/* 44h */	TexturePtr mThirdThumbnail;
+		/* 48h */	TexturePtr mFourthThumbnail;
 		/// Whenever the name is changed (use the SetName() method) it sends a `0x7AA519DC` message
 		/* 4Ch */	eastl::string16 mName;
 		/// Whenever the description is changed (use the SetDescription() method) it sends a `0x14418C3F` message
